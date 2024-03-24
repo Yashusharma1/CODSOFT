@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Course {
+    String courseCode;
+    String title;
+    String description;
+    int capacity;
+    List<String> schedule;
+
+    public Course(String courseCode, String title, String description, int capacity, List<String> schedule) {
+        this.courseCode = courseCode;
+        this.title = title;
+        this.description = description;
+        this.capacity = capacity;
+        this.schedule = schedule;
+    }
+}
+
+class Student {
+    String studentID;
+    String name;
+    List<Course> registeredCourses;
+
+    public Student(String studentID, String name) {
+        this.studentID = studentID;
+        this.name = name;
+        registeredCourses = new ArrayList<>();
+    }
+
+    public void registerCourse(Course course) {
+        if (registeredCourses.size() < 5 && course.capacity > 0) {
+            registeredCourses.add(course);
+            course.capacity--;
+            System.out.println("Course registration successful.");
+        } else {
+            System.out.println("Course registration failed.");
+        }
+    }
+
+    public void dropCourse(Course course) {
+        if (registeredCourses.contains(course)) {
+            registeredCourses.remove(course);
+            course.capacity++;
+            System.out.println("Course dropped successfully.");
+        } else {
+            System.out.println("You are not registered for this course.");
+        }
+    }
+}
+
+public class CourseRegistrationSystem {
+    private static List<Course> courses = new ArrayList<>();
+    private static List<Student> students = new ArrayList<>();
+
+    public static void main(String[] args) {
+        initializeCourses();
+        // Add student registration logic here
+    }
+
+    private static void initializeCourses() {
+        // Add courses here
+        courses.add(new Course("CS101", "Introduction to Programming", "Learn basic programming concepts", 30, List.of("Monday 10:00 AM")));
+        courses.add(new Course("MATH201", "Calculus", "Advanced calculus topics", 25, List.of("Wednesday 2:00 PM")));
+        // Add more courses as needed
+    }
+}
