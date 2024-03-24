@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+class QuizQuestion {
+    String question;
+    List<String> options;
+    int correctOption;
+
+    public QuizQuestion(String question, List<String> options, int correctOption) {
+        this.question = question;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+}
+
+public class QuizApplication {
+    private static int score = 0;
+    private static int currentQuestionIndex = 0;
+    private static List<QuizQuestion> quizQuestions = new ArrayList<>();
+    private static Timer timer;
+
+    public static void main(String[] args) {
+        initializeQuiz();
+        startQuiz();
+    }
+
+    private static void initializeQuiz() {
+        // Add quiz questions here
+        quizQuestions.add(new QuizQuestion("Question 1?", List.of("Option 1", "Option 2", "Option 3"), 0));
+        quizQuestions.add(new QuizQuestion("Question 2?", List.of("Option 1", "Option 2", "Option 3"), 1));
+        // Add more questions as needed
+    }
+
+    private static void startQuiz() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Time's up!");
+                showNextQuestion();
+            }
+        }, 30000); // 30 seconds timer for each question
+
+        showNextQuestion();
+    }
+
+    private static void showNextQuestion() {
+        if (currentQuestionIndex < quizQuestions.size()) {
+            QuizQuestion question = quizQuestions.get(currentQuestionIndex++);
+            System.out.println(question.question);
+            for (int i = 0; i < question.options.size(); i++) {
+                System.out.println((i + 1) + ". " + question.options.get(i));
+            }
+            getUserAnswer(question);
+        } else {
+            endQuiz();
+        }
+    }
+
+    private static void getUserAnswer(QuizQuestion question) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your answer (1-" + question.options.size() + "): ");
+        int userAnswer = scanner.nextInt();
+        if (userAnswer == question.correctOption + 1) {
+            System.out.println("Correct!");
+            score++;
+        } else {
+            System.out.println("Incorrect!");
+        }
+        showNextQuestion();
+    }
+
+    private static void endQuiz() {
+        timer.cancel();
+        System.out.println("Quiz ended!");
+        System.out.println("Your score: " + score);
+    }
+}
