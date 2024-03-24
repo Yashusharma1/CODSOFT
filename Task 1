@@ -1,0 +1,40 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+
+    public static void main(String[] args) {
+        // Set the random number range
+        int min = 1;
+        int max = 100;
+
+        // Generate a random number
+        Random random = new Random();
+        int randomNumber = random.nextInt(max - min + 1) + min;
+
+        // Initialize variables for the game loop
+        int guessCount = 0;
+        int userGuess;
+
+        // Start the game loop
+        do {
+            guessCount++;
+
+            // Prompt the user for their guess
+            System.out.println("Enter your guess (between " + min + " and " + max + "): ");
+            userGuess = new Scanner(System.in).nextInt();
+
+            // Check the user's guess
+            if (userGuess == randomNumber) {
+                System.out.println("Congratulations! You guessed the number in " + guessCount + " tries.");
+            } else if (userGuess > randomNumber) {
+                System.out.println("Your guess is too high. Try again.");
+            } else {
+                System.out.println("Your guess is too low. Try again.");
+            }
+        } while (userGuess != randomNumber);
+
+        // Close the Scanner object
+        new Scanner(System.in).close();
+    }
+}
