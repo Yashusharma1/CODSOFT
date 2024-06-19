@@ -3,19 +3,15 @@ import java.util.Scanner;
 public class StudentGradeCalculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("How many subjects? ");
-        int numberOfSubjects = scanner.nextInt();
-
-        int[] marks = new int[numberOfSubjects];
+        int subjects = 5;
         int totalMarks = 0;
 
-        for (int i = 0; i < numberOfSubjects; i++) {
-            System.out.print("Enter the marks for subject " + (i + 1) + ": ");
-            marks[i] = scanner.nextInt();
-            totalMarks += marks[i];
+        for (int i = 1; i <= subjects; i++) {
+            System.out.print("Enter marks for subject " + i + ": ");
+            totalMarks += scanner.nextInt();
         }
 
-        double averagePercentage = (double) totalMarks / numberOfSubjects;
+        double averagePercentage = totalMarks / (double) subjects;
         char grade;
 
         if (averagePercentage >= 90) {
@@ -30,9 +26,8 @@ public class StudentGradeCalculator {
             grade = 'F';
         }
 
-        System.out.println("\n--- Result ---");
         System.out.println("Total Marks: " + totalMarks);
-        System.out.println("Average Percentage: " + String.format("%.2f", averagePercentage) + "%");
+        System.out.println("Average Percentage: " + averagePercentage + "%");
         System.out.println("Grade: " + grade);
 
         scanner.close();
